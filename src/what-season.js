@@ -17,31 +17,24 @@ function getSeason(date) {
     return "Unable to determine the time of year!";
   }
 
-  const originalDate = new Date(date);
-
-  if (
-    !(originalDate instanceof Date) ||
-    isNaN(originalDate) ||
-    Object.prototype.toString.call(originalDate) !== "[object Date]" ||
-    originalDate.getDate() !== date.getDate() ||
-    originalDate.getMonth() !== date.getMonth() ||
-    originalDate.getFullYear() !== date.getFullYear()
-  ) {
+  try {
+    if (date.getTime() === date.getTime()) {
+      const month = date.getMonth();
+      if (month === 11 || month === 0 || month === 1) {
+        return "winter";
+      }
+      if (month >= 2 && month <= 4) {
+        return "spring";
+      }
+      if (month >= 5 && month <= 7) {
+        return "summer";
+      }
+      if (month >= 8 && month <= 10) {
+        return "autumn";
+      }
+    }
+  } catch (e) {
     throw new Error("Invalid date!");
-  }
-
-  const month = originalDate.getMonth();
-  if (month === 11 || month === 0 || month === 1) {
-    return "winter";
-  }
-  if (month >= 2 && month <= 4) {
-    return "spring";
-  }
-  if (month >= 5 && month <= 7) {
-    return "summer";
-  }
-  if (month >= 8 && month <= 10) {
-    return "autumn";
   }
 }
 
